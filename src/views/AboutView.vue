@@ -1,6 +1,7 @@
 <template>
   <div class="about">
     <p>我是about组件</p>
+    <p>工具的力量</p>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="age" label="年龄" width="180"> </el-table-column>
         <el-table-column prop="userName" label="姓名" width="180"> </el-table-column>
