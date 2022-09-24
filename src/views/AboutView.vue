@@ -1,12 +1,11 @@
 <template>
   <div class="about">
-    <template>
+    <p>我是about组件</p>
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="age" label="年龄" width="180"> </el-table-column>
         <el-table-column prop="userName" label="姓名" width="180"> </el-table-column>
         <el-table-column prop="sex" label="性别"> </el-table-column>
       </el-table>
-    </template>
   </div>
 </template>
 
