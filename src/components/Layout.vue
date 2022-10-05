@@ -17,31 +17,39 @@
               :collapse-transition=false
               text-color="#fff"
               active-text-color="#ffd04b" router>
-            <el-menu-item index="/facilitymanager">
+            <el-menu-item index="/home">
               <i class="el-icon-s-platform"></i>
-              <span slot="title">设备管理</span>
+              <span slot="title">图表展示</span>
             </el-menu-item>
-            <el-menu-item index="/usermanages">
-              <template slot="title">
-                <i class="el-icon-user"></i>
-                <span slot="title">444</span>
-              </template>
+<!--            <el-menu-item index="/usermanager">-->
+<!--              <i class="el-icon-s-platform"></i>-->
+<!--              <span slot="title">用户管理</span>-->
+<!--            </el-menu-item>-->
+            <el-menu-item index="/systemset">
+              <i class="el-icon-s-platform"></i>
+              <span slot="title">系统设置</span>
             </el-menu-item>
-            <el-submenu index="/taskmanages">
+<!--            <el-menu-item index="/usermanages">-->
+<!--              <template slot="title">-->
+<!--                <i class="el-icon-user"></i>-->
+<!--                <span slot="title">444</span>-->
+<!--              </template>-->
+<!--            </el-menu-item>-->
+            <el-submenu index="/usermanager">
               <template slot="title">
                 <i class="el-icon-s-data"></i>
-                <span>任务管理</span>
+                <span>用户管理</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="/taskmanages/urgenttask">紧急任务</el-menu-item>
-                <el-menu-item index="/taskmanages/commontask">普通任务</el-menu-item>
+                <el-menu-item index="/usermanager/importantpeople">重点人员管理</el-menu-item>
+                <el-menu-item index="/usermanager/whitename">白名单管理</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 
-            <el-menu-item index="/center">
-              <i class="el-icon-s-home"></i>
-              <span slot="title">个人中心</span>
-            </el-menu-item>
+<!--            <el-menu-item index="/center">-->
+<!--              <i class="el-icon-s-home"></i>-->
+<!--              <span slot="title">个人中心</span>-->
+<!--            </el-menu-item>-->
           </el-menu>
         </el-aside>
 <!--        内容部分-->
@@ -67,31 +75,31 @@ export default {
     width: 200px;
     //min-height: 400px;
   }
-  
+
   .layout {
     width: 100%;
     height: 100%;
   }
-  
+
   .el-container.is-vertical {
     height: 100%;
   }
-  
+
   body > .el-container {
     margin-bottom: 40px;
   }
-  
+
   .el-header {
     background-color: #253043;
     color: #fff;
     text-align: center;
     line-height: 60px;
   }
-  
+
   .el-aside {
     height: 100vh;
     background: #222D3B;
     overflow: hidden !important;
   }
-  
+
   </style>

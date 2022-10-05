@@ -27,20 +27,36 @@ const routes = [
         name: 'home',
         meta: { title: '首页' },
         component: () => import('../views/HomeView')
-      },      
+      },
+
+        {
+          path: '/usermanager',
+          name: 'usermanager',
+          component: () => import('../views/UserManager.vue'),
+          meta: {title: '用户管理'},
+          children: [
+            {
+              path: '/usermanager/importantpeople',
+              name: 'importantpeople',
+              meta: {title: '重点人员管理'},
+              component: () => import('../views/ImportantPeople')
+            },
+            {
+              path: '/usermanager/whitename',
+              name: 'whitename',
+              meta: {title: '白名单管理'},
+              component: () => import('../views/WhiteName')
+            },
+          ],
+
+      },
+
       {
-        path: '/about',
-        name: 'about',
-        meta: { title: '首页' },
-        component: () => import('../views/AboutView')
-      }
-      //   {
-      //     path: '/newsmanager',
-      //     name: 'newsmanager',
-      //     meta: {title: '首页'},
-      //     component: () => import('../views/NewsManager')
-      // },
- 
+        path: '/systemset',
+        name: 'systemset',
+        meta: {title: '系统设置'},
+        component: () => import('../views/SystemSet')
+      },
 
     ]
   }
