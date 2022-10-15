@@ -2,7 +2,7 @@
 <div>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <el-button type="primary">新增</el-button>
+      <el-button type="primary" @click="add">新增</el-button>
       <el-input
         style="float: right;width: 30%"
         placeholder="请输入内容"
@@ -84,6 +84,39 @@
 
   </el-card>
 
+  <el-dialog
+    :before-close="calce"
+    title="添加"
+    :visible.sync="dialogVisible"
+    width="30%"
+>
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="日期" prop="date">
+
+        <el-date-picker
+
+          v-model="ruleForm.date"
+          type="date"
+          @change="showDate"
+          value-format="yyyy-MM-dd"
+          placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="姓名" prop="name">
+        <el-input v-model="ruleForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="地址" prop="address">
+        <el-input v-model="ruleForm.address"></el-input>
+      </el-form-item>
+
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+    <el-button @click="calce">取 消</el-button>
+    <el-button type="primary" @click="ok">确 定</el-button>
+  </span>
+  </el-dialog>
+
+
 </div>
 </template>
 
@@ -92,7 +125,26 @@
         name: "SystemSet",
       data(){
           return{
+            ruleForm:{
+              name:'',
+              address:'',
+              date:'',
+
+            },
+            rules: {
+              name: [
+                { required: true, message: '请输入活动名称', trigger: 'blur' },
+                // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+              ],
+              address: [
+                { required: true, message: '请选择活动区域', trigger: 'change' }
+              ],
+              date: [
+                { type: 'string', required: true, message: '请选择日期', trigger: 'change' }
+              ],
+            },
             input4:'',
+            dialogVisible: false,
             activeName: 'first',
             tableData: [],
             form: {
@@ -129,12 +181,35 @@
           ]
       },
       methods:{
+        showDate(val){
+          console.log(val)
+        },
+          add(){
+            this.dialogVisible = true
+          },
+
+        calce(){
+          this.dialogVisible = false
+          this.ruleForm={}
+        },
+
+
+        ok(){
+          this.$refs.ruleForm.validate((valid) => {
+            if (valid) {
+              this.tableData.push(this.ruleForm)
+              this.ruleForm={}
+              this.dialogVisible = false
+            } else {
+              return false;
+            }
+          });
+        },
         handleClick(tab) {
           console.log(tab.index);
-          if(tab.index=='1'){
-            alert(1111)
-
-          }
+          // if(tab.index=='1'){
+          //
+          // }
         },
         onSubmit() {
           console.log('submit!');
