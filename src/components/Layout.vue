@@ -29,6 +29,10 @@
               <i class="el-icon-s-platform"></i>
               <span slot="title">系统设置</span>
             </el-menu-item>
+            <el-menu-item index="/echarts">
+              <i class="el-icon-s-platform"></i>
+              <span slot="title">图表设置</span>
+            </el-menu-item>
 <!--            <el-menu-item index="/usermanages">-->
 <!--              <template slot="title">-->
 <!--                <i class="el-icon-user"></i>-->

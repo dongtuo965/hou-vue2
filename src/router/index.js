@@ -57,6 +57,12 @@ const routes = [
         meta: {title: '系统设置'},
         component: () => import('../views/SystemSet')
       },
+      {
+        path: '/echarts',
+        name: 'echarts',
+        meta: {title: '图表设置'},
+        component: () => import('../views/ECharts')
+      }
 
     ]
   }
