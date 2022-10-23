@@ -93,9 +93,7 @@
           ],
           date1: [
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          ],
-
-        },
+          ]        },
 
         dialogVisible: false,
         tableData: [{
