@@ -28,7 +28,6 @@
 
           </el-form-item>
 
-
 <!--          <el-form-item>-->
 <!--            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>-->
 <!--            <el-button @click="resetForm('ruleForm')">重置</el-button>-->
@@ -42,109 +41,115 @@
   </span>
     </el-dialog>
 
-
-
-
 <!--    表格-->
     <el-table
       :data="tableData"
       stripe
       style="width: 100%">
       <el-table-column
-        prop="date"
-        label="日期"
+        prop="title"
+        label="标题"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="姓名"
+        prop="goods_number"
+        label="商品数量"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="address"
-        label="地址">
+        prop="current_price"
+        label="当前价格">
+      </el-table-column>
+      <el-table-column
+        label="图片">
+        <template slot-scope="scope">
+          <img style="width: 50px;height: 50px" :src="scope.row.img_big_logo"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "ECharts",
-    data() {
-      return {
-        ruleForm: {
-          name: '',
-          address: '',
-          date: '',
+export default {
+  name: 'ECharts',
+  data () {
+    return {
+      ruleForm: {
+        name: '',
+        address: '',
+        date: '',
 
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        rules: {
-          name: [
-            { required: true, message: '请输入姓名', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          address: [
-            { required: true, message: '请输入地址', trigger: 'blur' }
-          ],
-          date1: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          ]        },
-
-        dialogVisible: false,
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-          {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-          {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-          {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入姓名', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        address: [
+          { required: true, message: '请输入地址', trigger: 'blur' }
+        ],
+        date1: [
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+      },
 
+      dialogVisible: false,
+      tableData: []
+    }
+  },
+  mounted () {
+    this.getData()
+  },
+  methods: {
+    getData () {
+      this.$axios.get('http://localhost:8888/goods/list',
+        { params: { current: 1, pagesize: 5 } }).then((res) => {
+        console.log(res)
+        this.tableData = res.data.list
+      }).catch((err) => {
+        console.log(err)
+      })
     },
-    methods: {
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
 
+    handleClose (done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    }
 
   }
-  }
+}
 </script>
 
 <style scoped>
