@@ -47,6 +47,7 @@
               <el-menu-item-group>
                 <el-menu-item index="/usermanager/importantpeople">重点人员管理</el-menu-item>
                 <el-menu-item index="/usermanager/whitename">白名单管理</el-menu-item>
+                <el-menu-item index="/usermanager/GouWuChe">购物车</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 

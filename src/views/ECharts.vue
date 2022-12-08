@@ -90,7 +90,6 @@ export default {
         name: '',
         address: '',
         date: '',
-
         delivery: false,
         type: [],
         resource: '',

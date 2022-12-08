@@ -42,6 +42,12 @@ const routes = [
               component: () => import('../views/ImportantPeople')
             },
             {
+              path: '/usermanager/GouWuChe',
+              name: 'gouwuche',
+              meta: {title: '购物车'},
+              component: () => import('../views/GouWuChe')
+            },
+            {
               path: '/usermanager/whitename',
               name: 'whitename',
               meta: {title: '白名单管理'},
@@ -63,6 +69,7 @@ const routes = [
         meta: {title: '图表设置'},
         component: () => import('../views/ECharts')
       }
+
 
     ]
   }
