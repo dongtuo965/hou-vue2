@@ -28,6 +28,19 @@ const routes = [
         meta: { title: '首页' },
         component: () => import('../views/HomeView')
       },
+      {
+        path: '/crud',
+        name: 'crud',
+        component: () => import('@/views/crud/CrudPage'),
+        meta: {title: '增删改查'},
+        children: [
+          {
+            path: '/crud/crudpage',
+            name: 'crudpage',
+            meta: {title: '增删改查'},
+            component: () => import('@/views/crud/CrudPage')
+          },
+          ]},
 
         {
           path: '/usermanager',
@@ -44,7 +57,7 @@ const routes = [
             {
               path: '/usermanager/GouWuChe',
               name: 'gouwuche',
-              meta: {title: '购物车'},
+              meta: {title: '商品列表'},
               component: () => import('../views/GouWuChe')
             },
             {

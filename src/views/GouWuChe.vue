@@ -1,12 +1,13 @@
 <template>
   <div>
-    <el-page-header @back="goBack" content="购物车">
+    <el-page-header @back="goBack" content="商品列表">
     </el-page-header>
     <el-table
       ref="multipleTable"
       :data="tableData"
+      height="700"
       tooltip-effect="dark"
-      style="width: 100%"
+      style="width: 100%;margin: 40px 0"
       @selection-change="handleSelectionChange">
       <el-table-column
         type="selection"
@@ -16,7 +17,7 @@
       <el-table-column
         prop="name"
         label="商品"
-        width="120">
+        >
         <template slot-scope="scope">
           <img style="width: 100px;height: 100px" :src="scope.row.img_big_logo"/>
         </template>
@@ -24,12 +25,12 @@
       <el-table-column
         prop="title"
         label="标题"
-        width="240">
+       >
       </el-table-column>
       <el-table-column
         prop="current_price"
         label="单价"
-        width="120">
+        >
       </el-table-column>
       <el-table-column
         prop="goods_number"
@@ -38,7 +39,7 @@
       </el-table-column>
       <el-table-column
         label="小计"
-        width="120">
+        >
         <template slot-scope="scope">
           {{ (scope.row.current_price * scope.row.goods_number).toFixed(2) }}
         </template>
@@ -57,11 +58,23 @@
     </el-table>
 
 
+<!--    <el-pagination-->
+<!--      background-->
+<!--      :page-size="tiaoshu"-->
+<!--      layout="prev, pager, next"-->
+<!--      :total="100">-->
+<!--    </el-pagination>-->
+
     <el-pagination
+      style="text-align: right"
       background
-      page-size="5"
-      layout="prev, pager, next"
-      :total="100">
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[5, 10, 20, 30]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
     </el-pagination>
 
 
@@ -73,6 +86,10 @@ export default {
   data() {
     return {
       tableData: [],
+      tiaoshu:5,
+      currentPage:1,
+      pageSize:5,
+      total:0,
       multipleSelection: []
     }
   },
@@ -81,12 +98,23 @@ export default {
     this.getData()
   },
 
-
   methods: {
+    handleSizeChange(tiaoShuVal) {
+      console.log(`每页 ${tiaoShuVal} 条`);
+      this.pageSize = tiaoShuVal
+      this.currentPage=1
+      this.getData()
+    },
+    handleCurrentChange(pageVal) {
+      console.log(`当前页: ${pageVal}`);
+      this.currentPage = pageVal
+      this.getData()
+    },
     getData() {
       this.$axios.get('http://localhost:8888/goods/list',
-        {params: {current: 1, pagesize: 5}}).then((res) => {
+        {params: {current: this.currentPage, pagesize: this.pageSize}}).then((res) => {
         console.log(res)
+        this.total = res.data.total
         this.tableData = res.data.list
       }).catch((err) => {
         console.log(err)
