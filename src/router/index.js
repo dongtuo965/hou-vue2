@@ -6,6 +6,10 @@ import Layout from '@/components/Layout'
 
 Vue.use(VueRouter)
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const routes = [
   {
     path: '/',
@@ -47,6 +51,7 @@ const routes = [
           name: 'usermanager',
           component: () => import('../views/UserManager.vue'),
           meta: {title: '用户管理'},
+          redirect: '/usermanager/importantpeople',
           children: [
             {
               path: '/usermanager/importantpeople',
@@ -56,10 +61,27 @@ const routes = [
             },
             {
               path: '/usermanager/GouWuChe',
-              name: 'gouwuche',
+              // name: 'gouwuche',
               meta: {title: '商品列表'},
-              component: () => import('../views/GouWuChe')
+              component: {render(c) { return c('router-view') }},
+              redirect: '/usermanager/GouWuChe',
+              // component: () => import('../views/GouWuChe'),
+              children: [
+                {
+                  // component: {render(c) { return c('router-view') }},
+                  path: '/usermanager/GouWuChe/shopinfo',
+                  name: 'ShopInfo',
+                  meta: {title: '商品详情'},
+                  // redirect: '/usermanager/GouWuChe/shopinfo'
+                  component: () => import('../views/ShopInfo')
+                },]
             },
+            // {
+            //   path: '/usermanager/GouWuChe/shopinfo',
+            //   name: 'ShopInfo',
+            //   meta: {title: '商品详情'},
+            //   component: () => import('../views/ShopInfo')
+            // },
             {
               path: '/usermanager/whitename',
               name: 'whitename',

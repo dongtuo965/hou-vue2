@@ -1,5 +1,9 @@
 <template>
   <div>
+    <BradePath></BradePath>
+<!--    <router-view ></router-view>-->
+    <div>
+      <p @click="goxinfo">去详情</p>
     <el-page-header @back="goBack" content="商品列表">
     </el-page-header>
     <el-table
@@ -77,16 +81,19 @@
       :total="total">
     </el-pagination>
 
-
+    </div>
   </div>
 </template>
 <script>
+import BradePath from "@/views/BradePath";
 export default {
   name: "GouWuChe",
+  components: {BradePath},
   data() {
     return {
       tableData: [],
       tiaoshu:5,
+
       currentPage:1,
       pageSize:5,
       total:0,
@@ -104,6 +111,11 @@ export default {
       this.pageSize = tiaoShuVal
       this.currentPage=1
       this.getData()
+    },
+    goxinfo(){
+      alert(996)
+      this.$router.push('/usermanager/GouWuChe/shopinfo')
+
     },
     handleCurrentChange(pageVal) {
       console.log(`当前页: ${pageVal}`);

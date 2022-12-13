@@ -5,6 +5,12 @@
 <!--      头部-->
       <el-header style="display: flex;justify-content: space-between;align-items: center">
         <div >商品后台管理系统</div>
+        <div style="display: flex">
+          <AllShowTime/>
+
+          <ScreenFull></ScreenFull>
+          <el-button type="danger" style="margin:10px" @click="gologin">退出</el-button>
+        </div>
       </el-header>
       <el-container>
 <!--        侧边栏-->
@@ -76,12 +82,23 @@
   </div>
 </template>
 <script>
+
+import AllShowTime from "@/components/AllShowTime/AllShowTime";
+import ScreenFull from "@/components/ScreenFull/ScreenFull";
 export default {
   name: 'Layout',
+  components: {ScreenFull, AllShowTime},
   data () {
     return {
 
     }
+  },
+  methods:{
+
+    gologin() {
+      this.$router.push('./login')
+      sessionStorage.clear()
+    },
   }
 }
 </script>

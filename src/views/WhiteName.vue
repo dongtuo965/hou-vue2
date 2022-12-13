@@ -26,7 +26,7 @@
           <a-select-option value="lucy">
             Lucy
           </a-select-option>
-          <a-select-option value="disabled" disabled>
+          <a-select-option value="disabled" >
             Disabled
           </a-select-option>
           <a-select-option value="Yiminghe">
@@ -41,19 +41,21 @@
 
       <template slot="operation" slot-scope="text, record, index">
         <div class="editable-row-operations">
-        <span v-if="record.editable">
-          <a @click="() => save(record.key)">保存</a>
-          <a-popconfirm title="您确定要取消吗?"
+{{record}}
+        <span  v-if="!record.editable" >
+          <a @click="() => save(record,record.key,record.editable)">保存</a>
+          <a-popconfirm   title="您确定要取消吗?"
                         okText="确定"
-                        cancelText="取消" @confirm="() => cancel(record.key)">
+                        cancelText="取消" @confirm="() => cancel(record.key,index)">
             <a>取消</a>
           </a-popconfirm>
         </span>
           <span v-else>
           <a :disabled="editingKey !== ''" @click="() => edit(record.key)">编辑</a>
         </span>
+
           <a-popconfirm
-            v-if="data.length"
+            v-if="data.length>1&&record.key"
             title="您确定要删除吗?"
             okText="确定"
             cancelText="取消"
@@ -83,12 +85,6 @@
       width: '15%',
       scopedSlots: {customRender: 'age'},
     },
-    // {
-    //   title: 'address',
-    //   dataIndex: 'address',
-    //   width: '40%',
-    //   scopedSlots: { customRender: 'address' },
-    // },
     {
       title: '操作',
       dataIndex: 'operation',
@@ -106,13 +102,11 @@
   }
   export default {
     data() {
-
-
       return {
-        ifdisabled: true,
         data,
         columns,
         editingKey: '',
+        ifdisabled: false,
       };
     },
     mounted() {
@@ -130,8 +124,10 @@
       },
 
       handleAdd() {
+
+        this.ifdisabled = false
         // 如果文本框是禁用的状态，就可以继续添加
-        if (this.ifdisabled == true) {
+        // if (this.ifdisabled == true) {
           const {count, data} = this;
           const newData = {
             key: JSON.stringify(new Date()),
@@ -145,10 +141,10 @@
           this.cacheData = this.data.map(item => ({...item}));
           // 表格的数据
           console.log(this.cacheData)
-        } else {
-          this.$message.warning('请先进行保存再添加下一条信息')
-          return false
-        }
+        // } else {
+        //   this.$message.warning('请先进行保存再添加下一条信息')
+        //   return false
+        // }
 
 
       },
@@ -159,32 +155,40 @@
 
       edit(key) {
         console.log(key)
-
         const newData = [...this.data];
         const target = newData.find(item => key === item.key);
         this.editingKey = key;
         if (target) {
           this.ifdisabled = false
-          target.editable = true;
+          target.editable = false;
           this.data = newData;
         }
       },
-      save(key) {
-        this.ifdisabled = true
+      save(record,key,editable) {
+        // 如果表格里的文本框有值在执行
+        if(record.name&&record.age){
         console.log(key)
         const newData = [...this.data];
         const newCacheData = [...this.cacheData];
         const target = newData.find(item => key === item.key);
         const targetCache = newCacheData.find(item => key === item.key);
         if (target && targetCache) {
-          delete target.editable;
+          this.ifdisabled = true
+          target.editable = true;
+          console.log(target)
+          console.log(targetCache)
+          // delete target.editable;
           this.data = newData;
           Object.assign(targetCache, target);
           this.cacheData = newCacheData;
         }
         this.editingKey = '';
+        }else {
+          this.$message.warning('请将信息填写完整后在进行保存')
+        }
       },
-      cancel(key) {
+      cancel(key,index) {
+        this.data.splice(index,1)
         const newData = [...this.data];
         const target = newData.find(item => key === item.key);
         this.editingKey = '';
