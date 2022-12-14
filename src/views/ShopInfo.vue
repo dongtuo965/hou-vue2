@@ -1,5 +1,6 @@
 <template>
-    <div style="position:absolute;width: calc(100% - 2px);height: calc(100% - 20px);z-index: 999;">
+    <div style="position:absolute;margin: 4px 0; background: white; width: calc(86%);height: calc(96%);z-index: 999;">
+<!--    <div >-->
       我是商品详情
       dsfsdfdsfdsf
     </div>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <BradePath></BradePath>
-<!--    <router-view ></router-view>-->
-    <div>
+    <router-view></router-view>
+    <div >
       <p @click="goxinfo">去详情</p>
     <el-page-header @back="goBack" content="商品列表">
     </el-page-header>
@@ -11,13 +11,12 @@
       :data="tableData"
       height="700"
       tooltip-effect="dark"
-      style="width: 100%;margin: 40px 0"
+      style="width: 100%;margin: 20px 0"
       @selection-change="handleSelectionChange">
       <el-table-column
         type="selection"
         width="55">
       </el-table-column>
-
       <el-table-column
         prop="name"
         label="商品"
@@ -93,16 +92,27 @@ export default {
     return {
       tableData: [],
       tiaoshu:5,
-
+      haha:'',
       currentPage:1,
       pageSize:5,
       total:0,
       multipleSelection: []
     }
   },
+  watch:{
+    haha(newVal,oldVal)  {
+      this.haha = newVal
+      console.log( this.haha)
+    }
+  },
 
   mounted() {
     this.getData()
+// this.$route.matched.map((item)=>{
+//       this.haha = item.path
+//     })
+//     console.log( this.haha)
+//
   },
 
   methods: {

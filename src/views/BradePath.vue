@@ -1,13 +1,15 @@
 
 <!--面包屑-->
 <template>
+
   <el-breadcrumb separator=">">
     <!--      遍历路由信息并展示-->
-    <el-breadcrumb-item v-for="(item,index) in lists" :key="item.path">
 
+    <el-breadcrumb-item v-for="(item,index) in lists" :key="item.path">
       <router-link :to="item.path">{{item.meta.title}}</router-link>
     </el-breadcrumb-item>
   </el-breadcrumb>
+
 </template>
 
 <script>
@@ -111,6 +113,7 @@
     $route(to,from)  {
       console.log(to)
       this.lists = to.matched
+
     }
   },
   }

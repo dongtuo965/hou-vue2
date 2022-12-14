@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/layout',
     component: Layout,
-    meta: { title: '首页' },
+    meta: { title: '工作台' },
     redirect: '/home', // 重定向 防止页面进来空白  默认选中侧边栏上的文字
     children: [
       {
@@ -49,9 +49,10 @@ const routes = [
         {
           path: '/usermanager',
           name: 'usermanager',
-          component: () => import('../views/UserManager.vue'),
+          // component: () => import('../views/UserManager.vue'),
           meta: {title: '用户管理'},
-          redirect: '/usermanager/importantpeople',
+          component: {render(c) { return c('router-view') }},
+          redirect: '/usermanager/GouWuChe',
           children: [
             {
               path: '/usermanager/importantpeople',
@@ -61,18 +62,14 @@ const routes = [
             },
             {
               path: '/usermanager/GouWuChe',
-              // name: 'gouwuche',
+              name: 'gouwuche',
               meta: {title: '商品列表'},
-              component: {render(c) { return c('router-view') }},
-              redirect: '/usermanager/GouWuChe',
-              // component: () => import('../views/GouWuChe'),
+              component: () => import('../views/GouWuChe'),
               children: [
                 {
-                  // component: {render(c) { return c('router-view') }},
                   path: '/usermanager/GouWuChe/shopinfo',
                   name: 'ShopInfo',
                   meta: {title: '商品详情'},
-                  // redirect: '/usermanager/GouWuChe/shopinfo'
                   component: () => import('../views/ShopInfo')
                 },]
             },

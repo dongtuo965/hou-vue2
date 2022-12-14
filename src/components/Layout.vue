@@ -75,7 +75,7 @@
         </el-aside>
 <!--        内容部分-->
         <el-main>
-          <router-view></router-view>
+          <router-view :key="key"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -91,6 +91,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  computed:{
+    key(){
+      return this.$route.path + Math.random()
     }
   },
   methods:{
