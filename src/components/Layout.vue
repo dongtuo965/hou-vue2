@@ -85,6 +85,7 @@
 
 import AllShowTime from "@/components/AllShowTime/AllShowTime";
 import ScreenFull from "@/components/ScreenFull/ScreenFull";
+import { MessageBox } from 'element-ui';
 export default {
   name: 'Layout',
   components: {ScreenFull, AllShowTime},
@@ -101,8 +102,21 @@ export default {
   methods:{
 
     gologin() {
-      this.$router.push('./login')
-      sessionStorage.clear()
+      console.log(this)
+      MessageBox.confirm('确认要退出系统吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$router.push('./login')
+        sessionStorage.clear()
+        this.$message({
+          type: 'success',
+          message: '操作成功!'
+        });
+      }).catch(() => {
+
+      });
     },
   }
 }

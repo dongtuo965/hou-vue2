@@ -10,10 +10,9 @@
 export default {
   name: 'HomeView',
   components: {
-
-
   },
   mounted() {
+    console.log(this)
     this.init()
   },
   methods:{

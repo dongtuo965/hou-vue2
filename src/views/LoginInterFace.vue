@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  // import {login} from '../../request/api'
+  import {logininfoInterFace} from '@/request/api'
 
   export default {
     name: "Login",
@@ -78,15 +78,35 @@
         }
       },
       login() {
-        if(this.logininfo.account == '' || this.logininfo.password == ''){
-          return  this.$message.warning('账号或密码不能为空')
-        }else if (this.logininfo.account == 'admin' && this.logininfo.password == '123456') {
-          this.$message.success('登录成功')
-          sessionStorage.setItem('role', this.logininfo.account)
-          this.$router.push('/home')
-        }else {
-          this.$message.warning('账号或密码错误')
-        }
+
+        logininfoInterFace({
+          adminname:this.logininfo.account,
+          password:this.logininfo.password
+        }).then((res) => {
+          console.log(res)
+          // this.tableData = res.data.list
+        }).catch((err) => {
+          console.log(err)
+        })
+
+        // this.$axios.post(`http://localhost:8888/users/login?username=zhangsanabc&password=aaa111`,
+        //      ).then((res) => {
+        //   console.log(res)
+        //   // this.tableData = res.data.list
+        // }).catch((err) => {
+        //   console.log(err)
+        // })
+
+
+        // if(this.logininfo.account == '' || this.logininfo.password == ''){
+        //   return  this.$message.warning('账号或密码不能为空')
+        // }else if (this.logininfo.account == 'admin' && this.logininfo.password == '123456') {
+        //   this.$message.success('登录成功')
+        //   sessionStorage.setItem('role', this.logininfo.account)
+        //   this.$router.push('/home')
+        // }else {
+        //   this.$message.warning('账号或密码错误')
+        // }
       }
 
       // login() {

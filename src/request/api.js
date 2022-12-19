@@ -6,7 +6,8 @@ export const getshebei = () => request.get('/scoreList')
 // get请求传参时
 // export const GetsearchData = (params) => request.get('/list',{params})
 // post请求
-export const logininfo = (params) => request.post('/list', params)
+// export const logininfoInterFace = () => request.post('/users/login?username=zhangsanabc&password=aaa111')
+export const logininfoInterFace = (params) => request.post('/admin/login',params)
 // export const checkcity = (params) => request.post('/list', params)
 
 

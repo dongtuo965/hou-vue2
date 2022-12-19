@@ -1,13 +1,17 @@
 import axios from 'axios'
 
 const instace = axios.create({
-  baseURL: 'http://localhost:8848',   //请求根路径
+  baseURL: process.env.VUE_APP_API_BASE_URL,   //请求根路径
+  // baseURL: 'http://localhost:8888',   //请求根路径
   timeout: 5000, //请求超时时间
   headers: {}
+
+
 })
 
 // 请求拦截器
 instace.interceptors.request.use(config => {
+  console.log(process.env.VUE_APP_API_BASE_URL)
   console.log('进入请求拦截器')
   console.log(config)
   return config
