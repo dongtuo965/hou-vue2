@@ -1,72 +1,96 @@
 <template>
   <div>
-    <!--    弹出框-->
-    <el-button type="text" @click="dialogVisible = true">点击打开</el-button>
+<h3>员工信息</h3>
 
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-<!--      弹出框内容-->
-      <div>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-          <el-form-item label="姓名" prop="name">
-            <el-input v-model="ruleForm.name"></el-input>
+
+    <el-row >
+      <el-col :span="12">
+        <el-form :inline="true" size="mini" :model="formInline" class="demo-form-inline">
+          <el-form-item label="人员姓名:">
+            <el-input v-model="formInline.user" placeholder="请输入内容">
+              <el-button slot="append" icon="el-icon-search" @click="searchContent"></el-button>
+            </el-input>
           </el-form-item>
-          <el-form-item label="地址" prop="address">
-            <el-input v-model="ruleForm.address"></el-input>
-          </el-form-item>
+          <el-form-item label="部门:">
+            <el-select v-model="formInline.region" placeholder="活动区域">
+              <el-option label="请选择" value="0"></el-option>
+              <el-option label="教练部" value="1"></el-option>
+              <el-option label="运营部" value="2"></el-option>
+              <el-option label="财务部" value="3"></el-option>
+              <el-option label="审讯部" value="4"></el-option>
 
-          <el-form-item label="日期" required>
-            <el-col :span="11">
-              <el-form-item prop="date">
-                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
-              </el-form-item>
-            </el-col>
-
+            </el-select>
           </el-form-item>
 
-<!--          <el-form-item>-->
-<!--            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>-->
-<!--            <el-button @click="resetForm('ruleForm')">重置</el-button>-->
-<!--          </el-form-item>-->
         </el-form>
+      </el-col>
+      <el-col :span="12" style="text-align: right">
+        <el-button type="" size="mini" icon="el-icon-loading" @click="reloadPage">刷新</el-button>
+        <el-button type="primary" size="mini" icon="el-icon-plus">添加新成员</el-button>
+      </el-col>
 
-      </div>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-    </el-dialog>
+    </el-row>
 
-<!--    表格-->
+
     <el-table
-      :data="tableData"
       stripe
+      :data="tableData"
       style="width: 100%">
       <el-table-column
-        prop="title"
-        label="标题"
-        width="180">
+        label="序号"
+        type="index"
+        width="50">
       </el-table-column>
       <el-table-column
-        prop="goods_number"
-        label="商品数量"
-        width="180">
+        prop="name"
+        label="人员姓名"
+        >
       </el-table-column>
       <el-table-column
-        prop="current_price"
-        label="当前价格">
+        prop="name"
+        label="会员与否"
+      >
       </el-table-column>
       <el-table-column
-        label="图片">
+        prop="name"
+        label="性别"
+       >
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="部门"
+        >
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="联系方式"
+        >
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="职位"
+        >
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="薪资"
+        >
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="上月工作时长"
+        width="180"
+        >
+      </el-table-column>
+      <el-table-column
+        label="请假（天）"
+        >
         <template slot-scope="scope">
-          <img style="width: 50px;height: 50px" :src="scope.row.img_big_logo"/>
+          {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="180">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -78,79 +102,108 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="tableData.length">
+    </el-pagination>
   </div>
 </template>
 
 <script>
+  import { MessageBox } from 'element-ui';
 export default {
   name: 'ECharts',
   data () {
     return {
-      ruleForm: {
-        name: '',
-        address: '',
-        date: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+      formInline: {
+        user: '',
+        region: "0"
       },
-      rules: {
-        name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        address: [
-          { required: true, message: '请输入地址', trigger: 'blur' }
-        ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ]
-      },
-
-      dialogVisible: false,
-      tableData: []
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      }],
+      currentPage4: 1
     }
   },
   mounted () {
-    this.getData()
+
   },
   methods: {
-    getData () {
-      this.$axios.get('http://localhost:8888/goods/list',
-        { params: { current: 1, pagesize: 5 } }).then((res) => {
-        console.log(res)
-        this.tableData = res.data.list
-      }).catch((err) => {
-        console.log(err)
-      })
+    reloadPage(){
+      // window.location.reload()
+      this.$router.go(0)
     },
+    onSubmit() {
+      console.log('submit!');
+    },
+    searchContent(){
+      alert(996)
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+      MessageBox.confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
 
-    handleClose (done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
+
+
     },
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     }
-
   }
+
+
 }
 </script>
 
 <style scoped>
-
+  /deep/ .el-table::before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0px;
+  }
+  .el-pagination {
+    text-align: end;
+    margin-top: 20px;
+  }
 </style>
