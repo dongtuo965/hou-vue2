@@ -34,6 +34,12 @@ const routes = [
         component: () => import('../views/HomeView')
       },
       {
+        path: '/crud/antv',
+        name: 'g6',
+        meta: {title: '组织图'},
+        component: () => import('@/views/crud/DefinedComponent')
+      },
+      {
         path: '/crud',
         name: 'crud',
         component: () => import('@/views/crud/CrudPage'),
@@ -45,6 +51,7 @@ const routes = [
             meta: {title: '增删改查'},
             component: () => import('@/views/crud/CrudPage')
           },
+
           ]},
 
         {
