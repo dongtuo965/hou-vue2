@@ -1,7 +1,12 @@
 <template>
   <!--设置parentContent的宽高为浏览器大小-->
   <div class="parentContent" ref="parentContent">
+    <a-button type="primary" @click="exportImg">
+      导出图谱
+    </a-button>
     <div id="container" ref="container"></div>
+
+
   </div>
 </template>
 <script>
@@ -21,6 +26,30 @@
       }
     },
     methods: {
+
+      exportImg(){
+        //这里涉及到了组件传值，用的是子组件里面的方法
+        console.log(this.graph)
+        this.graph.toFullDataURL(// 第一个参数为 callback，必须
+          (res) => {
+            console.log(res); // 打印出结果
+            // 下载
+            var oA = document.createElement('a')
+            oA.download = '996'
+            oA.href = res
+            document.body.appendChild(oA)
+            oA.click()
+            oA.remove() // 下载之后把创建的元素删除
+          },
+          // 后两个参数不是必须
+          'image/jpeg',
+          {
+            backgroundColor: '#fff',
+            padding: 10,
+          }
+        )
+      },
+
       /**
        * 设置画布大小自适应
        */
