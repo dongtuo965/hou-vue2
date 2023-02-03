@@ -132,16 +132,16 @@ export default {
       this.currentPage = pageVal
       this.getData()
     },
-    getData() {
-      this.$axios.get('http://localhost:8888/goods/list',
-        {params: {current: this.currentPage, pagesize: this.pageSize}}).then((res) => {
-        console.log(res)
-        this.total = res.data.total
-        this.tableData = res.data.list
-      }).catch((err) => {
-        console.log(err)
-      })
-    },
+    // getData() {
+    //   this.$axios.get('http://localhost:8888/goods/list',
+    //     {params: {current: this.currentPage, pagesize: this.pageSize}}).then((res) => {
+    //     console.log(res)
+    //     this.total = res.data.total
+    //     this.tableData = res.data.list
+    //   }).catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
 
     goBack() {
       console.log('go back');

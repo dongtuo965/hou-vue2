@@ -1,9 +1,9 @@
 <template>
   <!--设置parentContent的宽高为浏览器大小-->
   <div class="parentContent" ref="parentContent">
-    <a-button type="primary" @click="exportImg">
-      导出图谱
-    </a-button>
+<!--    <a-button type="primary" @click="exportImg">-->
+<!--      导出图谱-->
+<!--    </a-button>-->
     <div id="container" ref="container"></div>
 
 
@@ -347,11 +347,11 @@
   .parentContent {
     width: 100%;
     height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    /*position: absolute;*/
+    /*left: 50;*/
+    /*top: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
   }
   #nodeDetails {
     list-style: none;

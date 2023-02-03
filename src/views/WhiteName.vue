@@ -1,208 +1,79 @@
 <template>
-  <div>
-    <a-table :columns="columns" :data-source="data" bordered :pagination="false">
-      <template
-        v-for="col in ['name', 'age', 'address']"
-        :slot="col"
-        slot-scope="text, record, index"
-      >
-        <div :key="col">
-          <a-input
-            v-if="record.editable"
-            style="margin: -5px 0"
-            :value="text"
-            @change="e => handleChange(e.target.value, record.key, col)"
-          />
-          <template v-else>
-            {{ text }}
-          </template>
-        </div>
-      </template>
-      <template slot="name" slot-scope="text, record, index">
-        <a-select default-value="lucy" style="width: 100%" v-model="record.name" :disabled="ifdisabled">
-          <a-select-option value="jack">
-            Jack
-          </a-select-option>
-          <a-select-option value="lucy">
-            Lucy
-          </a-select-option>
-          <a-select-option value="disabled" >
-            Disabled
-          </a-select-option>
-          <a-select-option value="Yiminghe">
-            yiminghe
-          </a-select-option>
-        </a-select>
-
-      </template>
-      <template slot="age" slot-scope="text, record, index">
-        <a-input v-model="record.age" :disabled="ifdisabled"/>
-      </template>
-
-      <template slot="operation" slot-scope="text, record, index">
-        <div class="editable-row-operations">
-{{record}}
-        <span  v-if="!record.editable" >
-          <a @click="() => save(record,record.key,record.editable)">保存</a>
-          <a-popconfirm   title="您确定要取消吗?"
-                        okText="确定"
-                        cancelText="取消" @confirm="() => cancel(record.key,index)">
-            <a>取消</a>
-          </a-popconfirm>
-        </span>
-          <span v-else>
-          <a :disabled="editingKey !== ''" @click="() => edit(record.key)">编辑</a>
-        </span>
-
-          <a-popconfirm
-            v-if="data.length>1&&record.key"
-            title="您确定要删除吗?"
-            okText="确定"
-            cancelText="取消"
-            @confirm="() => onDelete(record.key)"
-          >
-            <a href="javascript:;">删除</a>
-          </a-popconfirm>
-        </div>
-      </template>
-    </a-table>
-    <a-button class="editable-add-btn" @click="handleAdd">
-      添加
-    </a-button>
-  </div>
+  <a-tree
+    v-model="checkedKeys"
+    checkable
+    :expanded-keys="expandedKeys"
+    :auto-expand-parent="autoExpandParent"
+    :selected-keys="selectedKeys"
+    :tree-data="treeData"
+    @expand="onExpand"
+    @check="onCheck"
+    @select="onSelect"
+  />
 </template>
 <script>
-  const columns = [
+  const treeData = [
     {
-      title: '账号类型',
-      dataIndex: 'name',
-      width: '25%',
-      scopedSlots: {customRender: 'name'},
-    },
-    {
-      title: '账号信息',
-      dataIndex: 'age',
-      width: '15%',
-      scopedSlots: {customRender: 'age'},
-    },
-    {
-      title: '操作',
-      dataIndex: 'operation',
-      scopedSlots: {customRender: 'operation'},
+      title: '0',
+      key: '0',
+      children: [
+        {
+          title: '1',
+          key: '1',
+          children: [
+            { title: '11', key: '110' },
+            { title: '111', key: '1110' },
+            { title: '1111', key: '11110' },
+          ],
+        },
+        {
+          title: '2',
+          key: '2',
+          children: [
+            { title: '22', key: '220' },
+            { title: '222', key: '2220' },
+            { title: '2222', key: '22220' },
+          ],
+        },
+      ],
     },
   ];
 
-  const data = [];
-  for (let i = 0; i < 0; i++) {
-    data.push({
-      key: i.toString(),
-      name: `Edrward ${i}`,
-      age: ``,
-    });
-  }
   export default {
     data() {
       return {
-        data,
-        columns,
-        editingKey: '',
-        ifdisabled: false,
+        // 默认展开的树
+        expandedKeys: ['0', '1'],
+        autoExpandParent: true,
+        // 默认勾选的框
+        checkedKeys: ['1'],
+        selectedKeys: [],
+        treeData,
       };
     },
-    mounted() {
-      this.cacheData = this.data.map(item => ({...item}));
-      console.log(this.cacheData)
+    watch: {
+      checkedKeys(val) {
+        console.log('onCheck', val);
+      },
     },
     methods: {
-      handleChange(value, key, column) {
-        const newData = [...this.data];
-        const target = newData.find(item => key === item.key);
-        if (target) {
-          target[column] = value;
-          this.data = newData;
-        }
+      // 展开合上 树 触发的事件
+      onExpand(expandedKeys) {
+        console.log('onExpand', expandedKeys);
+        // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+        // or, you can remove all expanded children keys.
+        this.expandedKeys = expandedKeys;
+        this.autoExpandParent = false;
       },
-
-      handleAdd() {
-
-        this.ifdisabled = false
-        // 如果文本框是禁用的状态，就可以继续添加
-        // if (this.ifdisabled == true) {
-          const {count, data} = this;
-          const newData = {
-            key: JSON.stringify(new Date()),
-            name: ``,
-            age: ``,
-            address: ``
-          };
-          this.data = [...data, newData];
-          this.count = count + 1;
-          // this.ifdisabled = true
-          this.cacheData = this.data.map(item => ({...item}));
-          // 表格的数据
-          console.log(this.cacheData)
-        // } else {
-        //   this.$message.warning('请先进行保存再添加下一条信息')
-        //   return false
-        // }
-
-
+      onCheck(checkedKeys) {
+        console.log('onCheck', checkedKeys);
+        this.checkedKeys = checkedKeys;
       },
-      onDelete(key) {
-        const dataSource = [...this.data];
-        this.data = dataSource.filter(item => item.key !== key);
-      },
-
-      edit(key) {
-        console.log(key)
-        const newData = [...this.data];
-        const target = newData.find(item => key === item.key);
-        this.editingKey = key;
-        if (target) {
-          this.ifdisabled = false
-          target.editable = false;
-          this.data = newData;
-        }
-      },
-      save(record,key,editable) {
-        // 如果表格里的文本框有值在执行
-        if(record.name&&record.age){
-        console.log(key)
-        const newData = [...this.data];
-        const newCacheData = [...this.cacheData];
-        const target = newData.find(item => key === item.key);
-        const targetCache = newCacheData.find(item => key === item.key);
-        if (target && targetCache) {
-          this.ifdisabled = true
-          target.editable = true;
-          console.log(target)
-          console.log(targetCache)
-          // delete target.editable;
-          this.data = newData;
-          Object.assign(targetCache, target);
-          this.cacheData = newCacheData;
-        }
-        this.editingKey = '';
-        }else {
-          this.$message.warning('请将信息填写完整后在进行保存')
-        }
-      },
-      cancel(key,index) {
-        this.data.splice(index,1)
-        const newData = [...this.data];
-        const target = newData.find(item => key === item.key);
-        this.editingKey = '';
-        if (target) {
-          Object.assign(target, this.cacheData.find(item => key === item.key));
-          delete target.editable;
-          this.data = newData;
-        }
+      // 点框后面的文字触发的事件
+      onSelect(selectedKeys, info) {
+        console.log('onSelect', info);
+        this.selectedKeys = selectedKeys;
       },
     },
   };
 </script>
-<style scoped>
-  .editable-row-operations a {
-    margin-right: 8px;
-  }
-</style>
