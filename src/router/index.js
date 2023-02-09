@@ -93,6 +93,12 @@ const routes = [
               meta: {title: '白名单管理'},
               component: () => import('../views/WhiteName')
             },
+            {
+              path: '/usermanager/uploadfile',
+              name: 'uploadfile',
+              meta: {title: '文件上传'},
+              component: () => import('../views/UploadFile')
+            },
           ],
 
       },

@@ -65,6 +65,7 @@
               <el-menu-item-group>
                 <el-menu-item index="/crud/crudpage">主页面</el-menu-item>
                 <el-menu-item index="/crud/antv">组织图</el-menu-item>
+                <el-menu-item index="/usermanager/uploadfile">文件上传</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 
