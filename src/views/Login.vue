@@ -30,6 +30,12 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model.trim="logininfo.password" placeholder="请输入密码" type="password"></el-input>
         </el-form-item>
+
+        <el-form-item label="验证码" prop="code">
+          <el-input style="width: 50%;margin-right: 8px" v-model.trim="logininfo.code" placeholder="请输入验证码" ></el-input>
+          <img :src="tu" />
+        </el-form-item>
+
         <!--        {{$md5(logininfo.password)}}-->
         <el-form-item>
           <el-button type="primary" @click="login('ruleForm')" @keyup.enter="keyDown">登录</el-button>
@@ -41,6 +47,7 @@
 
 <script>
   // import {login} from '../../request/api'
+  import {Getcode}  from '@/request/api'
 
   export default {
     name: "Login",
@@ -48,12 +55,18 @@
       return {
         logininfo: {
           account: 'admin',
-          password: '123456'
+          password: '123456',
+          code: '',
         },
+        tu: '',
         rules: {
           account: [
             {required: true, message: '请输入账号', trigger: 'blur'},
             {min: 4, max: 10, message: '长度在 4 到 10 个字符', trigger: 'blur'}
+          ],
+          code: [
+            {required: true, message: '请输入验证码', trigger: 'blur'},
+            // {min: 4, max: 10, message: '长度在 4 到 10 个字符', trigger: 'blur'}
           ],
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
@@ -64,12 +77,24 @@
       }
     },
     mounted() {
+      this.haha()
       window.addEventListener('keydown', this.keyDown);
     },
     destroyed() {
       window.removeEventListener('keydown', this.keyDown, false);
     },
     methods: {
+
+      haha() {
+        Getcode().then(res => {
+          this.tu =  `data:image/gif;base64,${res.data.img}`
+          console.log(this.tu)
+        }).catch(err => {
+          console.log(err)
+        })
+
+      },
+
       keyDown(e) {
         //如果是回车则执行登录方法
         if (e.keyCode == 13) {
