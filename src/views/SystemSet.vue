@@ -55,6 +55,7 @@
             <el-form-item label="即时配送">
               <el-switch v-model="form.delivery"></el-switch>
             </el-form-item>
+
             <el-form-item label="活动性质">
               <el-checkbox-group v-model="form.type">
                 <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
@@ -121,7 +122,9 @@
 </template>
 
 <script>
-    export default {
+
+
+  export default {
         name: "SystemSet",
       data(){
           return{
