@@ -84,7 +84,15 @@
           password:this.logininfo.password
         }).then((res) => {
           console.log(res)
-          // this.tableData = res.data.list
+          let { data, errorCode, errorMessage } = res.data
+          if (errorCode == 'SUCCESS') {
+            this.tableListData = data.records
+            console.log(this.tableListData)
+            this.pagination.total = Number(data.total)
+            console.log(this.pagination.total)
+          } else {
+            this.$message.error(errorMessage)
+          }
         }).catch((err) => {
           console.log(err)
         })
