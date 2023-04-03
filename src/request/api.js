@@ -5,6 +5,11 @@ export const getshebei = () => request.get('/scoreList')
 
 // get请求传参时
 export const Getcode = (params) => request.get('/stage-api/code',{params})
+
+
+// 获取侧边栏
+export const GetAside = (params) => request.get('/prod-api/getRouters',{params})
+
 // post请求
 // export const logininfoInterFace = () => request.post('/users/login?username=zhangsanabc&password=aaa111')
 export const logininfoInterFace = (params) => request.post('/admin/login',params)
