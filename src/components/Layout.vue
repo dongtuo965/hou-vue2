@@ -86,6 +86,7 @@
 <script>
 
 import AllShowTime from "@/components/AllShowTime/AllShowTime";
+import {GetAside} from  '@/request/api'
 import ScreenFull from "@/components/ScreenFull/ScreenFull";
 import { MessageBox } from 'element-ui';
 export default {
@@ -101,9 +102,19 @@ export default {
       return this.$route.path + Math.random()
     }
   },
+  mounted() {
+this.getAsides()
+  },
   methods:{
+    getAsides(){
+      GetAside().then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
 
-    gologin() {
+    gologin(){
       console.log(this)
       MessageBox.confirm('确认要退出系统吗?', '提示', {
         confirmButtonText: '确定',
