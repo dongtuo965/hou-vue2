@@ -2,8 +2,6 @@
   <div>
 <h3>员工信息</h3>
 
-
-
     <el-row >
       <el-col :span="12">
         <el-form :inline="true" size="mini" :model="formInline" class="demo-form-inline">
@@ -112,6 +110,23 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="tableData.length">
     </el-pagination>
+
+
+    <el-card  @click.native.stop="abc">
+
+      <el-dropdown trigger="click" style="cursor: pointer">
+        <span @click.stop="abc">...</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>黄金糕</el-dropdown-item>
+          <el-dropdown-item>狮子头</el-dropdown-item>
+          <el-dropdown-item>螺蛳粉</el-dropdown-item>
+          <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+          <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
+    </el-card>
+
   </div>
 </template>
 
@@ -155,6 +170,9 @@ export default {
     },
     onSubmit() {
       console.log('submit!');
+    },
+    abc(e) {
+      this.$router.push('/home')
     },
     searchContent(){
       alert(996)
