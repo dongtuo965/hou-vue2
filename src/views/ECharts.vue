@@ -1,6 +1,8 @@
 <template>
   <div>
 <h3>员工信息</h3>
+<img src="../assets/react.jpg" />
+<img :src="abc" />
 
 
 
@@ -125,6 +127,7 @@ export default {
         user: '',
         region: "0"
       },
+      abc:require('../assets/react.jpg') ,
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
