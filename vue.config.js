@@ -2,7 +2,7 @@ module.exports = {
   lintOnSave: false,
   devServer: {
     // development server port 8848
-    port: 8848,
+    port: 8888,
     proxy: {
       '/api': {
         target: 'http://www.xtypgh.com:8081',
