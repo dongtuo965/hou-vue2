@@ -39,6 +39,7 @@ const routes = [
         meta: {title: '组织图'},
         component: () => import('@/views/crud/DefinedComponent')
       },
+
       {
         path: '/crud',
         name: 'crud',
@@ -108,6 +109,12 @@ const routes = [
         name: 'systemset',
         meta: {title: '系统设置'},
         component: () => import('../views/SystemSet')
+      },
+      {
+        path: '/chartdata',
+        name: 'chartdata',
+        meta: {title: '大屏展示'},
+        component: () => import('../views/ChartData')
       },
       {
         path: '/echarts',

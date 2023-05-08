@@ -39,12 +39,12 @@
               <i class="el-icon-s-platform"></i>
               <span slot="title">图表设置</span>
             </el-menu-item>
-<!--            <el-menu-item index="/usermanages">-->
-<!--              <template slot="title">-->
-<!--                <i class="el-icon-user"></i>-->
-<!--                <span slot="title">444</span>-->
-<!--              </template>-->
-<!--            </el-menu-item>-->
+            <el-menu-item index="/chartdata">
+              <template slot="title">
+                <i class="el-icon-s-grid"></i>
+                <span slot="title">大屏展示</span>
+              </template>
+            </el-menu-item>
             <el-submenu index="/usermanager">
               <template slot="title">
                 <i class="el-icon-s-data"></i>
