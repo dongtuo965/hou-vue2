@@ -72,11 +72,11 @@
             backgroundColor:'#021e38',
             grid: [
               {
-                left: -100,
+                left: 10,
                 top: 20,
                 right: 0,
                 bottom: 0,
-                containLabel: true,
+                // containLabel: true,
               },
             ],
             xAxis: [

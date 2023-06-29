@@ -78,7 +78,7 @@
 
   /*隔行换色（背景）*/
   .nan tr.ant-table-row.ant-table-row-level-0:nth-child(even){
-    background: url("/chartdata/tablebgc1.png");
+    /*background: url("/chartdata/tablebgc1.png");*/
   }
   /*.nan tr.ant-table-row.ant-table-row-level-0:nth-child(even):hover{*/
   /*  background: url("/chartdata/tablebgc1.png");*/
